@@ -19,7 +19,7 @@ high = sys.argv[2]
 int_high = int(high)
 
 execute_time = time(9, 21, 5).strftime("%H:%M:%S")
-open_time = time(7, 21, 1).strftime("%H:%M:%S")
+open_time = time(9, 15, 0).strftime("%H:%M:%S")
 exit_time = time(15, 15, 0).strftime("%H:%M:%S")
 
 kite = KiteConnect(api_key=configs["api_key"])
@@ -77,19 +77,19 @@ def get_request_token():
 				current_time = datetime.now().time().strftime("%H:%M:%S")
 				if current_time == execute_time:
 					for asset in assets:
-						ltp_asset = kite.ltp("NFO:{ast}".format(ast = asset))
-						op_asset = ltp_asset["NFO:{ast}".format(ast = asset)]["last_price"]
-						int_op_asset = float(op_asset)
+						# ltp_asset = kite.ltp("NFO:{ast}".format(ast = asset))
+						# op_asset = ltp_asset["NFO:{ast}".format(ast = asset)]["last_price"]
+						# int_op_asset = float(op_asset)
 						if asset.endswith("CE"):
 							if sell_counter_ce == 0:
 								cepe_dict['ce'] = int_op_asset
-								sell_ce = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset, transaction_type = kite.TRANSACTION_TYPE_SELL, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET)
+								sell_ce = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset, transaction_type = kite.TRANSACTION_TYPE_SELL, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET, validity = kite.VALIDITY_DAY)
 								sell_counter_ce = 1
 								print("Sold CE" + sell_ce)
 						else:
 							if sell_counter_pe == 0:
 								cepe_dict['pe'] = int_op_asset
-								sell_pe = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset, transaction_type = kite.TRANSACTION_TYPE_SELL, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET)
+								sell_pe = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset, transaction_type = kite.TRANSACTION_TYPE_SELL, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET, validity = kite.VALIDITY_DAY)
 								sell_counter_pe = 1
 								print("Sold PE" + sell_pe)
 				break
@@ -120,12 +120,12 @@ def get_request_token():
 				if asset_ltp == target or asset_ltp == sl:
 					if asset1.endswith("CE"):
 						if buy_counter_ce == 0:
-							buy_ce = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset1, transaction_type = kite.TRANSACTION_TYPE_BUY, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET)
+							buy_ce = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset1, transaction_type = kite.TRANSACTION_TYPE_BUY, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET, validity = kite.VALIDITY_DAY)
 							buy_counter_ce = 1
 							print("Bought CE" + buy_ce)
 					else:
 						if buy_counter_pe == 0:
-							buy_pe = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset2, transaction_type = kite.TRANSACTION_TYPE_BUY, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET)
+							buy_pe = kite.place_order(variety = kite.VARIETY_REGULAR, exchange = kite.EXCHANGE_NFO, tradingsymbol = asset2, transaction_type = kite.TRANSACTION_TYPE_BUY, quantity = 1, product = kite.PRODUCT_MIS, order_type = kite.ORDER_TYPE_MARKET, validity = kite.VALIDITY_DAY)
 							buy_counter_pe = 1
 							print("Bought PE" + buy_pe)
 				break
